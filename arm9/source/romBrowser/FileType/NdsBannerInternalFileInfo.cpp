@@ -3,6 +3,7 @@
 #include <nds/arm9/cache.h>
 #include "fat/File.h"
 #include "Nds/NdsFileIcon.h"
+#include "gui/font/nitroFont2.h"
 #include "NdsBannerInternalFileInfo.h"
 
 bool NdsBannerInternalFileInfo::ReadBannerChunks(File& file, u32 availableSize)
@@ -41,6 +42,11 @@ bool NdsBannerInternalFileInfo::ReadBannerChunks(File& file, u32 availableSize)
         return false;
     }
 
+    // a title that fills all 128 characters has no terminator
+    for (int i = 0; i < 8; ++i)
+    {
+        _banner.title[i][127] = 0;
+    }
     DC_FlushRange(&_banner, sizeof(_banner));
     return true;
 }
@@ -62,6 +68,17 @@ const char16_t* NdsBannerInternalFileInfo::GetGameTitle() const
     if (!_hasBanner)
     {
         return nullptr;
+    }
+
+    // The built-in fonts can't draw Chinese, so the Chinese title is only picked
+    // when the CJK font from the SD card is there to draw it.
+    if (nft2_getFallbackFont())
+    {
+        const char16_t* chineseTitle = _banner.title[NDS_BANNER_TITLE_LANGUAGE_CHINESE];
+        if (chineseTitle[0] != 0)
+        {
+            return chineseTitle;
+        }
     }
 
     const char16_t* title = _banner.title[NDS_BANNER_TITLE_LANGUAGE_ENGLISH];

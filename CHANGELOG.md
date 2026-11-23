@@ -5,6 +5,10 @@
 ### [Unreleased]
 
 #### Added
+- Chinese file names and game titles. The built-in fonts have no Chinese glyphs, so the launcher
+  loads `/_pico/fonts/cjk.nft2` from the SD card when it exists and uses it for every character
+  the built-in font lacks; with it, a DS game shows its Chinese banner title when it has one. Without
+  the file nothing changes. See [Chinese.md](docs/Chinese.md).
 - A DS game can start in a language other than the console's. Language in the menu, next to New
   save, moves the highlighted DS game to the next language of its region and names it; Console
   is the default. The choice is `gameLanguage` in `gamedata.json`. It needs a Pico Loader

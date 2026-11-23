@@ -48,6 +48,15 @@ struct nft2_string_render_params_t
 /// @return True if preparing was successful, or false otherwise.
 bool nft2_unpack(nft2_header_t* font);
 
+/// @brief Sets a font that is used for characters the font being rendered with has no glyph for.
+///        The font must have been prepared with \see nft2_unpack and must stay valid.
+/// @param font The fallback font, or nullptr to turn the fallback off.
+void nft2_setFallbackFont(const nft2_header_t* font);
+
+/// @brief Gets the font set with \see nft2_setFallbackFont.
+/// @return The fallback font, or nullptr if there is none.
+const nft2_header_t* nft2_getFallbackFont();
+
 /// @brief Finds the glyph index in the given \p font that corresponds to the given \p character.
 /// @param font The font the find the glyph index in.
 /// @param character The character to find the glyph index for.

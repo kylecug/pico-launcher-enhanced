@@ -23,6 +23,13 @@ jobs:
       - name: Run build script
         run: |
           make
+      - name: Build the CJK fallback font
+        run: |
+          apt-get update
+          apt-get -y install python3 pcf2bdf xfonts-wqy
+          mkdir -p _pico/fonts
+          python3 tools/make_cjk_font.py --output _pico/fonts/cjk.nft2
+          cp licenses/wqy-bitmap-song.txt _pico/fonts/LICENSE-wqy-bitmap-song.txt
       - name: Publish build to GH Actions
         uses: actions/upload-artifact@v4
         with:
