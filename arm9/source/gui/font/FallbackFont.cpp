@@ -1,5 +1,6 @@
 #include "common.h"
 #include <stdlib.h>
+#include <malloc.h>
 #include <string.h>
 #include "fat/File.h"
 #include "nitroFont2.h"
